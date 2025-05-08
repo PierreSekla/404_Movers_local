@@ -23,9 +23,7 @@ if __name__ == "__main__":
     # numbers for demograhpic are 3, 37, 10 and 25 
     with open("data_donnees_2021_ind_v2.csv", 'r') as file:
         file_data = file.readlines()
-        
-        """
         Header = file_data[0].split(",")
         for i in range(len(Header)):
             print(f"{i+1}. {Header[i]}")
-        """
+        
