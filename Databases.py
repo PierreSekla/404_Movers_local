@@ -9,8 +9,12 @@ class Database:
         self.__Database_Mig_Mobi = "Mig_Mobi.db"
         self.__Database_Lan_Cultural = "Lan_Cultural.db"
     
-    def create_databases(self):
-        try:
+    def create_demo(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             #Demography
             cursor, connection = self.open_database(self.__Database_Demo)
             cursor.execute("""
@@ -22,16 +26,32 @@ class Database:
                 )
             """)
             self.close_database(connection)
+    
+    def create_edu_empl(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             # Education/Employment
             cursor, connection = self.open_database(self.__Database_Edu_Empl)
             cursor.execute("""
                 CREATE TABLE EducationEmploymentData(
                     EducationalAtttainment text,
                     FieldOfStudy text,
-                    EmploymentStatus text
+                    EmploymentStatus text,
+                    WorkActivity text,
+                    Occupation text
                 )
             """)
             self.close_database(connection)
+    
+    def create_inc_econ(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             # Income/Economic
             cursor, connection = self.open_database(self.__Database_Inc_Econ)
             cursor.execute("""
@@ -42,6 +62,13 @@ class Database:
                 )
             """)
             self.close_database(connection)
+    
+    def create_hou_livi(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             # Housing/Living
             cursor, connection = self.open_database(self.__Database_Hou_Livi)
             cursor.execute("""
@@ -52,6 +79,13 @@ class Database:
                 )
             """)
             self.close_database(connection)
+    
+    def create_mig_mobi(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             # Migration and Mobility
             cursor, connection = self.open_database(self.__Database_Mig_Mobi)
             cursor.execute("""
@@ -62,6 +96,13 @@ class Database:
                 )
             """)
             self.close_database(connection)
+    
+    def create_lan_cultural(self):
+            """
+            purpose:
+            parameter:
+            returns:
+            """
             # Languages/Cultural
             cursor, connection = self.open_database(self.__Database_Lan_Cultural)
             cursor.execute("""
@@ -71,8 +112,6 @@ class Database:
                 )
             """)
             self.close_database(connection)
-        except:
-            print("All 6 Databases have already been made")
     
     def open_database(self, database_name):
         """
@@ -107,7 +146,7 @@ class Database:
         self.close_database(connection)
         print("Added to Demography Data")
     
-    def add_to_edu_empl(self, EducationalAtttainment, FieldOfStudy, EmploymentStatus):
+    def add_to_edu_empl(self, EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation):
         """
         purpose: adds to the Demography Database
         parameter: 
@@ -116,8 +155,8 @@ class Database:
         cursor, connection = self.open_database(self.__Database_Edu_Empl)
         cursor.execute("""
         INSERT INTO EducationEmploymentData
-        VALUES (?, ?, ?)
-        """, [EducationalAtttainment, FieldOfStudy, EmploymentStatus])
+        VALUES (?, ?, ?, ?, ?)
+        """, [EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation])
         self.close_database(connection)
         print("Added to Education/Employment Data")
     
@@ -169,11 +208,61 @@ class Database:
         parameter: 
         return: 
         """
-        cursor, connection = self.open_database(self.__Database_Hou_Livi)
+        cursor, connection = self.open_database(self.__Database_Lan_Cultural)
         cursor.execute("""
         INSERT INTO LanguageCulturalData
         VALUES (?, ?)
         """, [LanguagesSpoken, ReligiousPractices])
         self.close_database(connection)
         print("Added to Languages and Cultural Data")
+
+    def delete_all_demo_data(self):
+        """
+        purpose: deletes all demo data (for testing purposes)
+        parameter: TBD
+        returns: None
+        """
+        cursor, connection = self.open_database(self.__Database_Demo)
+        cursor.execute("""
+            DELETE FROM DemographyData
+        """)
+        self.close_database(connection)
+        print("Everything has been deleted from the Demography database")
     
+    def delete_all_edu_empl_data(self):
+        """
+        purpose: deletes all the data in the employment database
+        parameter: None
+        return: None
+        """
+        cursor, connection = self.open_database(self.__Database_Edu_Empl)
+        cursor.execute("""
+            DELETE FROM EducationEmploymentData
+        """)
+        self.close_database(connection)
+        print("Everything has been deleted from the Education Employment database")
+    
+    def get_all_demo_data(self):
+        """
+        purpose: geta all the data from the database
+        return: list of tuples
+        """
+        cursor, connection = self.open_database(self.__Database_Demo)
+        demography_data = cursor.execute("""
+            SELECT * FROM DemographyData
+        """).fetchall()
+        self.close_database(connection)
+        return demography_data
+
+    def get_all_edu_empl(self):
+        """
+        purpose:
+        parameter:
+        return:
+        """
+        cursor, connection = self.open_database(self.__Database_Edu_Empl)
+        edu_empl_data = cursor.execute("""
+            SELECT * FROM EducationEmploymentData
+        """).fetchall()
+        self.close_database(connection)
+        return edu_empl_data
