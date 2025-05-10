@@ -41,7 +41,8 @@ class Database:
                     FieldOfStudy text,
                     EmploymentStatus text,
                     WorkActivity text,
-                    Occupation text
+                    Occupation text,
+                    Residence text
                 )
             """)
             self.close_database(connection)
@@ -146,7 +147,7 @@ class Database:
         self.close_database(connection)
         print("Added to Demography Data")
     
-    def add_to_edu_empl(self, EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation):
+    def add_to_edu_empl(self, EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation, Residence):
         """
         purpose: adds to the Demography Database
         parameter: 
@@ -155,10 +156,10 @@ class Database:
         cursor, connection = self.open_database(self.__Database_Edu_Empl)
         cursor.execute("""
         INSERT INTO EducationEmploymentData
-        VALUES (?, ?, ?, ?, ?)
-        """, [EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation])
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, [EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation, Residence])
         self.close_database(connection)
-        print("Added to Education/Employment Data")
+        #print(f"Added {[EducationalAtttainment, FieldOfStudy, EmploymentStatus, WorkActivity, Occupation, Residence]}to Education/Employment Data")
     
     def add_to_inc_econ(self, IncomeLevel, PovertyRate, GovernmentAsistance):
         """

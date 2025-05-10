@@ -61,6 +61,22 @@ class Code:
             88 : "Not available",
             99 : "Not applicable"
         }
+
+        self.__LOC_ST_RES_codes = {
+            10: "Newfoundland and Labrador",
+            11: "Prince Edward Island",
+            12: "Nova Scotia",
+            13: "New Brunswick",
+            24: "Quebec",
+            35: "Ontario",
+            46: "Manitoba",
+            47: "Saskatchewan",
+            48: "Alberta",
+            59: "British Columbia",
+            70: "Northern Canada",
+            88: "Not available",
+            99: "Not applicable"
+        }
     
     def get_HDGREE_code(self, code_num):
         """
@@ -77,3 +93,19 @@ class Code:
         return: list of strings
         """
         return self.__HDGREE_codes.values()
+
+    def get_LOC_ST_RES_code(self, code_num):
+        """
+        purpose: returns the code value for the province name
+        parameter code_num: int
+        return: string * province name
+        """
+        return self.__LOC_ST_RES_codes[int(code_num)]
+    
+    def get_LOC_ST_RES_values(self):
+        """
+        purpose: returns the values in the Province name dictionary
+        parameter: none
+        return: dictionary set of strings
+        """
+        return self.__LOC_ST_RES_codes.values()

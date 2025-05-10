@@ -52,70 +52,71 @@ class BarGraph:
 
 if __name__ == "__main__":
     # basic variables
+    # all the different titles
     title = "Educational Attainment"
     xname = "Education"
     yname = "Number of People"
-    # all the different titles
     All_Codes = Code()
-    # organizing data
+    # for different provinces
+    provinces = {}
+    prov_values = All_Codes.get_LOC_ST_RES_values()
+    for i in range(len(prov_values)):
+        provinces[list(prov_values)[i]] = {}
+    # organizing data according to province
     all_edu_empl_data = Database().get_all_edu_empl()
-    grouping_empl_data = {}
     for i in range(len(all_edu_empl_data)):
+        province_key = All_Codes.get_LOC_ST_RES_code(all_edu_empl_data[i][-1])
         key = All_Codes.get_HDGREE_code(all_edu_empl_data[i][0])
-        if key not in grouping_empl_data.keys():
-            grouping_empl_data[key] = 1
+        province_dictionary = provinces[province_key].keys()
+        if key not in province_dictionary:
+            provinces[province_key][key] = 1
         else:
-            grouping_empl_data[key] += 1
-    print(grouping_empl_data)
-    print("")
-    # making the bar graph
-    some_graph = BarGraph(list(grouping_empl_data.keys()), list(grouping_empl_data.values()))
+            provinces[province_key][key] += 1
+
+    # making the bar graph for Alberta as a start
+    some_graph = BarGraph(list(provinces["Alberta"].keys()), list(provinces["Alberta"].values()))
     # making the radio buttons
     some_graph.add_radio_buttons("white", ["Alberta", "British Columbia", "Saskatchewan", "Manitoba", "Ontario", "Quebec", "New Brunswick", 
-    "Prince Edward Island", "Nova Scotia", "Nunavut", "Yukon", "Newfoundland and Labrador", "Northwest Territories"], "blue")
+    "Prince Edward Island", "Nova Scotia", "Newfoundland and Labrador", "Northern Canada"], "blue")
     fig, ax = some_graph.get_figure(), some_graph.get_radio_axis()
     radio = some_graph.get_radio_buttons()
     # changing the graph depending on the button clicked
+
+
     def update_button(province_name):
         ax.clear()
         if province_name == "Alberta":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Alberta"].keys()), list(provinces["Alberta"].values()), color="blue")
 
         elif province_name == "British Columbia":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["British Columbia"].keys()), list(provinces["British Columbia"].values()), color="blue")
 
         elif province_name == "Saskatchewan":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Saskatchewan"].keys()), list(provinces["Saskatchewan"].values()), color="blue")
 
         elif province_name == "Manitoba":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Manitoba"].keys()), list(provinces["Manitoba"].values()), color="blue")
 
         elif province_name == "Ontario":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Ontario"].keys()), list(provinces["Ontario"].values()), color="blue")
 
         elif province_name == "Quebec":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Quebec"].keys()), list(provinces["Quebec"].values()), color="blue")
 
         elif province_name == "New Brunswick":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["New Brunswick"].keys()), list(provinces["New Brunswick"].values()), color="blue")
 
         elif province_name == "Prince Edward Island":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Prince Edward Island"].keys()), list(provinces["Prince Edward Island"].values()), color="blue")
 
         elif province_name == "Nova Scotia":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
-
-        elif province_name == "Nunavut":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
-
-        elif province_name == "Yukon":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Nova Scotia"].keys()), list(provinces["Nova Scotia"].values()), color="blue")
 
         elif province_name == "Newfoundland and Labrador":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+            ax.bar(list(provinces["Newfoundland and Labrador"].keys()), list(provinces["Newfoundland and Labrador"].values()), color="blue")
 
-        elif province_name == "Northwest Territories":
-            ax.bar(list(grouping_empl_data.keys()), list(grouping_empl_data.values()), color="blue")
+        elif province_name == "Northern Canada":
+            ax.bar(list(provinces["Northern Canada"].keys()), list(provinces["Northern Canada"].values()), color="blue")
         
         # labelling and adjustments
         ax.tick_params(axis='x', labelsize=7)
@@ -124,6 +125,9 @@ if __name__ == "__main__":
         ax.set_ylabel(yname, fontsize=15)
 
         fig.canvas.draw_idle()
+
+
+
     radio.on_clicked(update_button)
 
     some_graph.draw_graph("Educational Attainment", "Education", "Number of People")
