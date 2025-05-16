@@ -31,12 +31,12 @@ class Code:
             2 : "HSDO",
             3 : "NATC",
             4 : "AC",
-            5 : "PO3TLT1Y",
-            6 : "PO1T2Y",
-            7 : "POMT2Y",
-            8 : "UCOD",
+            5 : "PO3",
+            6 : "PO1",
+            7 : "POM",
+            8 : "UBCOD",
             9 : "BD",
-            10 : "UCOD",
+            10 : "UACOD",
             11 : "DIMD",
             12 : "MD",
             13 : "ED",
@@ -77,6 +77,24 @@ class Code:
             88: "Not available",
             99: "Not applicable"
         }
+
+        self.__HDGREE_Full_to_Short = {
+            "No certificate": "NC",
+            "High (secondary) school diploma or equivalency certificate": "HSDO",
+            "Non-apprenticeship trades certificate or diploma": "NATC",
+            "Apprenticeship Certificate": "AC",
+            "Program of 3 months to less than 1 year": "PO3",
+            "Program of 1 to 2 years": "PO1",
+            "Program of more than 2 years": "POM",
+            "University certificate or diploma below bachelor level": "UBCOD",
+            "Bachelor's Degree": "BD",
+            "University certificate or diploma above bachelor level": "UACOD",
+            "Degree in medicine, dentistry, veterinary medicine or optometry": "DIMD",
+            "Master's degree": "MD",
+            "Earned doctorate": "ED",
+            "Not available": "NAV",
+            "Not applicable": "NAP"
+        }
     
     def get_HDGREE_code(self, code_num):
         """
@@ -93,6 +111,22 @@ class Code:
         return: list of strings
         """
         return self.__HDGREE_codes.values()
+
+    def get_HDGREE_full_names(self):
+        """
+        purpose: returns all the names of each subject in Education Attainment in full strings
+        parameter: None
+        return: list of strings
+        """
+        return list(self.__HDGREE_Full.values())
+
+    def get_HDGREE_full_to_short(self, full_name):
+        """
+        purpose: converts the full name to the short name abrevasion
+        parameter full_name: string
+        return: string
+        """
+        return self.__HDGREE_Full_to_Short[full_name]
 
     def get_LOC_ST_RES_code(self, code_num):
         """

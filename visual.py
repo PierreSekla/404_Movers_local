@@ -1,7 +1,9 @@
 from Databases import Database
 from codes import Code
 import matplotlib.pyplot as plt
-from matplotlib.widgets import RadioButtons
+from matplotlib.widgets import Button, RadioButtons
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from tkinter import Tk, StringVar, OptionMenu
 
 class BarGraph:
     def __init__(self, x_axis, data):
@@ -9,6 +11,10 @@ class BarGraph:
         self.__data = data
         self.__radio = None
         self.__fig, self.__radio_axis = plt.subplots()
+
+        # variables for tkinter
+        self.__tkinter_canvas = None
+        self.__tkinter_ax = None
 
     
     def add_radio_buttons(self, bg_color, radio_labels, active_color):
@@ -45,10 +51,41 @@ class BarGraph:
         self.__radio_axis.set_title(title, fontsize=30)
         self.__radio_axis.set_xlabel(xname, fontsize=15)
         self.__radio_axis.set_ylabel(yname, fontsize=15)
-        # change the color
+
         plt.show()
+    
+    def add_tkinter_ax_and_canvas(self, ax, canvas):
+        """
+        purpose: saves the axis and canvas for when the graph is drawn
+        parameter ax: object
+        parameter canvas: object
+        """
+        self.__tkinter_ax = ax
+        self.__tkinter_canvas = canvas
+    
+    def change_graph_data(self, x_data, data):
+        """
+        purpose: gives the graph different data to make the bar graph
+        parameter x_data: list of strings
+        parameter data: list of numbers
+        return: None
+        """
+        self.__x_axis = x_data
+        self.__data = data
+    
+    def draw_graph_on_tkinter(self):
+        """
+        purpose: this is meant for the tkinter integration
+        """
+        self.__tkinter_ax.clear()
+        #plotting and making the graph
+        self.__tkinter_ax.bar(self.__x_axis, self.__data, color = "blue")
+        self.__tkinter_ax.tick_params(axis='x', labelsize=7)
+        self.__tkinter_ax.set_title("Educational Attainment", fontsize=20)
+        self.__tkinter_ax.set_xlabel("Education", fontsize=15)
+        self.__tkinter_ax.set_ylabel("Number of People", fontsize=15)
 
-
+        self.__tkinter_canvas.draw()
 
 if __name__ == "__main__":
     # basic variables
@@ -81,7 +118,6 @@ if __name__ == "__main__":
     fig, ax = some_graph.get_figure(), some_graph.get_radio_axis()
     radio = some_graph.get_radio_buttons()
     # changing the graph depending on the button clicked
-
 
     def update_button(province_name):
         ax.clear()
@@ -125,9 +161,7 @@ if __name__ == "__main__":
         ax.set_ylabel(yname, fontsize=15)
 
         fig.canvas.draw_idle()
-
-
-
+    
     radio.on_clicked(update_button)
 
     some_graph.draw_graph("Educational Attainment", "Education", "Number of People")
