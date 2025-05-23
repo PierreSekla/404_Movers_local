@@ -38,11 +38,31 @@ def organize_by_subject(provinces, choosen_province, subject_choosen):
     returns: dictionary of strings
     """
     province_and_subject_data = {}
-    if subject_choosen not in provinces[choosen_province].keys():
-        province_and_subject_data[choosen_province] = 0
-    else: 
-        province_and_subject_data[choosen_province] = provinces[choosen_province][subject_choosen]
+    if choosen_province != "Country Wide":
+        if subject_choosen not in provinces[choosen_province].keys():
+            province_and_subject_data[choosen_province] = 0
+        else: 
+            province_and_subject_data[choosen_province] = provinces[choosen_province][subject_choosen]
+    else:
+        country_data = get_country_data(provinces, All_Codes.get_HDGREE_values())
+        province_and_subject_data[choosen_province] = country_data[subject_choosen]
+
     return province_and_subject_data
+
+def get_country_data(provinces, subject_codes):
+    """
+    purpose: organizes for it to be country-wide
+    parameter provinces: dictionary of strings containing the information of each province
+    parameter subject_codes: dictionary of all the different possible subjects and education
+    returns: dictionary (of country data)
+    """
+    country_data = {}
+    for subject in subject_codes:
+        country_data[subject] = 0
+    for province in provinces.keys():
+        for education in provinces[province].keys():
+            country_data[education] += provinces[province][education]
+    return country_data
 
 
 
@@ -113,6 +133,10 @@ if __name__ == "__main__":
         elif province_choosen == "Northern Canada":
             the_graph.change_graph_data(list(provinces["Northern Canada"].keys()), list(provinces["Northern Canada"].values()))
         
+        elif province_choosen == "Country Wide":
+            data = get_country_data(provinces, All_Codes.get_HDGREE_values())
+            the_graph.change_graph_data(list(data.keys()), list(data.values()))
+        
         # labelling and adjustments
         the_graph.draw_graph_on_tkinter()
 
@@ -120,6 +144,8 @@ if __name__ == "__main__":
     for i in range(len(provinces.keys())):
         the_string = list(provinces.keys())[i]
         Radiobutton(root, text = the_string, variable = province_choosen, value=the_string, command=lambda: choosen_province(province_choosen.get())).pack()
+    
+    Radiobutton(root, text = "Country Wide", variable = province_choosen, value = "Country Wide", command = lambda: choosen_province(province_choosen.get())).pack()
 
     # adding the option menu
     subject_choosen = StringVar(root, value="No Certificate")
