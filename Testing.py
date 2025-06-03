@@ -4,6 +4,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from tkinter import Frame, Label, Tk, StringVar, OptionMenu, Radiobutton, RIGHT, NE, NW, Button
 from Databases import Database
 from visual import BarGraph
+from PIL import Image as Pillow_Image
+import base64
+import mss
+import mss.tools
 
 def get_edu_data(All_Codes, all_edu_empl_data):
     """
@@ -70,7 +74,6 @@ if __name__ == "__main__":
     # Data gathering and organization
     all_edu_empl_data = Database().get_all_edu_empl()
     All_Codes = Code()
-    provinces = None
     provinces = get_edu_data(All_Codes, all_edu_empl_data)
 
     the_graph = BarGraph(list(provinces["Alberta"].keys()), list(provinces["Alberta"].values()))
@@ -178,5 +181,15 @@ if __name__ == "__main__":
     toolbar.pack()
 
     the_graph.draw_graph_on_tkinter()
+    root.update()
+
+    x, y = root.winfo_rootx(), root.winfo_rooty()
+    w, h = root.winfo_width(), root.winfo_height()
+
+    bbox = {"top": y, "left": x, "width": w, "height": h}
+
+    with mss.mss() as sct:
+        img = sct.grab(bbox)
+        mss.tools.to_png(img.rgb, img.size, output="tkinter_gui.png")
 
     root.mainloop()
