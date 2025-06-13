@@ -1,10 +1,11 @@
 from Databases import Database
 from codes import Code
+from time import sleep
 
 if __name__ == "__main__":
     All_Databases = Database()
     All_Codes = Code()
-    # All_Databses.create_edu_empl()
+    #All_Databases.create_edu_empl()
     # 3: AGEGRP
     # 37: Gender
     # 10: CFSTAT
@@ -17,29 +18,16 @@ if __name__ == "__main__":
     # 86: NOC21
     # 109: PWPR
     # numbers for employment are 42, 12, 60, 125, 86 and 109
-    
+    print(All_Databases.get_all_edu_empl()[-2])
+    # reads the CSV PUMF file and copies only the necessary information to the database
     with open("data_donnees_2021_ind_v2.csv", 'r') as file:
         file_data = file.readlines()
-        header = file_data[0].split(",")
-        print(f"{header[41]}, {header[11]}, {header[59]}, {header[124]}, {header[85]}, {header[108]}")
-        #test_line = file_data[1].split(",")
-        #print(f"{test_line[41]}, {test_line[11]}, {test_line[59]}, {test_line[124]}, {test_line[85]}, {test_line[108]}")
-        # print(f"{All_Codes.get_HDGREE_code(int(test_line[59]))}")
-        """
         for i in range(1, len(file_data)):
             file_line = file_data[i].split(",")
-            All_Databses.add_to_edu_empl(file_line[41], file_line[11], file_line[59], test_line[124], test_line[84])
-
-        """
-        """
-        for i in range(1, 12930):
-            file_line = file_data[i].split(",")
             All_Databases.add_to_edu_empl(file_line[41], file_line[11], file_line[59], file_line[124], file_line[85], file_line[108])
-        print("Process finished!")
-        """
-        """
-        edu_empl_data = All_Databses.get_all_edu_empl()
-        for i in range(len(edu_empl_data)):
-            print(f"{i+1}. {edu_empl_data[i]}")
-        """
+        
+        print("Process Finished")
+        
+        
+    
         
