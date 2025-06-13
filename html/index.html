@@ -14,9 +14,43 @@
         These bar graphs shows the Educational Attainment for the entire country,
         by province. They can also be sorted by subject.
     </p>
+    <label for="Province">Province:</label>
+    <select id="Province">
+        <option value="Alberta">Alberta</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="Quebec">Quebec</option>
+        <option value="Ontario">Ontraio</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="Prince Edward Island">Prince Edward Island</option>
+        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+        <option value="Northern Canada">Nothern Canada</option>
+        <option value="All">All</option>
+    </select>
+    <label for="Education">Educational Attainment:</label>
+    <select id="Education">
+        <option value="No Certificate">No Certificate</option>
+        <option value="Not Available">Not Available</option>
+        <option value="Not Applicable">Not Applicable</option>
+        <option value="High (secondary) school diploma or equivalency certificate">High (secondary) school diploma or equivalency certificate</option>
+        <option value="Non-apprenticeship trades certificate or diploma">Non-apprenticeship trades certificate or diploma</option>
+        <option value="Apprenticeship Certificate">Apprenticeship Certificate</option>
+        <option value="Program of 3 months to less than 1 year">Program of 3 months to less than 1 year</option>
+        <option value="Program of 1 to 2 years">Program of 1 to 2 years</option>
+        <option value="Program of more than 2 years">Program of more than 2 years</option>
+        <option value="University certificate or diploma below bachelor level">University certificate or diploma below bachelor level</option>
+        <option value="University certificate or diploma above bachelor level">University certificate or diploma above bachelor level</option>
+        <option value="Bachelor's Degree">Bachelor's Degree</option>
+        <option value="Degree in medicine, dentistry, veterinary medicine or optometry">Degree in medicine, dentistry, veterinary medicine or optometry</option>
+        <option value="Master's degree">Master's degree</option>
+        <option value="Earned doctorate">Earned doctorate</option>
+    </select>
+    <p id="Notify"></p>
+    <hr>
     <div id="outer">
-        <svg class="bar-chart"></svg>
-        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <canvas id="myChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="module" src="{{url_for('static', path='index.js')}}">
 
         </script>
