@@ -18,7 +18,6 @@ if __name__ == "__main__":
     # 86: NOC21
     # 109: PWPR
     # numbers for employment are 42, 12, 60, 125, 86 and 109
-    print(All_Databases.get_all_edu_empl()[-2])
     # reads the CSV PUMF file and copies only the necessary information to the database
     with open("data_donnees_2021_ind_v2.csv", 'r') as file:
         file_data = file.readlines()
